@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics; // Remove this line as it's not needed
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletFuncionamiento : MonoBehaviour
@@ -8,8 +10,13 @@ public class BulletFuncionamiento : MonoBehaviour
     public float nacimiento; // cuando se dispara la bala
     public GameObject astPChiq1Prefab; // prefabs para cuando se destruye un asteroide grande se divida en dos chiquitos
     public GameObject astPChiq2Prefab;
+    public Transform bulletspawn;
     public float multiplicador = 15f;
 
+    void Start()
+    {
+        bulletspawn = GameObject.Find("BulletSpawner").transform;
+    }
     void OnEnable()
     {
         // Destroy(gameObject, life);
@@ -36,8 +43,7 @@ public class BulletFuncionamiento : MonoBehaviour
             Vector3 position = aster.transform.position;
             var tr1 = PoolManager.Instance.GetAsteroidChiq1();
             var tr2 = PoolManager.Instance.GetAsteroidChiq2();
-            // var tr1 = Instantiate(astPChiq1Prefab);
-            // var tr2 = Instantiate(astPChiq2Prefab);
+            
             if(tr1 == null || tr2 == null){
                 Debug.Log("No hay asteroides en el pool");
                 gameObject.SetActive(false);
@@ -46,26 +52,21 @@ public class BulletFuncionamiento : MonoBehaviour
                 GlobalVariables.IncrementarPuntos();
                 return;
             }
-            tr1.transform.position = position + new Vector3(1,1,0);
-            tr2.transform.position = position + new Vector3(-1,-1,0);
-            tr1.SetActive(true);
-            tr2.SetActive(true);
+            tr1.transform.position = position + new Vector3(0.25f,0.25f,0);
+            tr2.transform.position = position + new Vector3(-0.25f,-0.25f,0);
 
-            //distance entre dos untos
-            Vector3 g1 = new Vector3(3,3,0);
-            Vector3 g2 = new Vector3(-3,-3,0);
-            g1+=transform.position;
-            g2+=transform.position;
-
-            tr1.GetComponent<Rigidbody>().AddForce(g1* multiplicador );
-            tr2.GetComponent<Rigidbody>().AddForce(g2* multiplicador );
-
-            // tr1.GetComponent<Rigidbody>().velocity = tr1.GetComponent<Rigidbody>().velocity* multiplicador;
-            // tr2.GetComponent<Rigidbody>().velocity =  tr2.GetComponent<Rigidbody>().velocity* multiplicador;
-
+            Vector3 distancia= collision.transform.position - bulletspawn.position;
             gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
-            // Destroy(collision.gameObject);
+            tr1.SetActive(true);
+            tr2.SetActive(true);
+            // rotate the two asteroids 30º in the z axis
+            tr1.transform.Rotate(0, 0, 30);
+            tr2.transform.Rotate(0, 0, -30);
+            // add force to the two asteroids
+            tr1.GetComponent<Rigidbody>().velocity = (distancia.normalized + new Vector3 (1,1,0)) * multiplicador;
+            tr2.GetComponent<Rigidbody>().velocity = (distancia.normalized + new Vector3 (-1,-1,0)) * multiplicador;
+
             GlobalVariables.DecrementAsteroides();
             GlobalVariables.IncrementAsteroides();
             GlobalVariables.IncrementAsteroides();
