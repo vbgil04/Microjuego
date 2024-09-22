@@ -33,19 +33,19 @@ public class Asteroides : MonoBehaviour
             qPrefab = Random.Range(rangoBajo, rangoAlto);
             Vector3 astGSpawnPoint = GetRandomEdgePosition();
             GameObject ast = null;
-            // if(qPrefab<2){
-            //     // ast = Instantiate(astPChiq2Prefab, astGSpawnPoint, Quaternion.identity);
-            //     ast = PoolManager.Instance.GetAsteroidChiq2();
-            //     velocidad = GlobalVariables.vcelocidadChiq;
-            // } else if(qPrefab<4){
-            //     // ast = Instantiate(astPChiq1Prefab, astGSpawnPoint, Quaternion.identity);
-            //     ast = PoolManager.Instance.GetAsteroidChiq1();
-            //     velocidad = GlobalVariables.vcelocidadChiq;
-            // } else {
+            if(qPrefab<2){
+                // ast = Instantiate(astPChiq2Prefab, astGSpawnPoint, Quaternion.identity);
+                ast = PoolManager.Instance.GetAsteroidChiq2();
+                velocidad = GlobalVariables.vcelocidadChiq;
+            } else if(qPrefab<4){
+                // ast = Instantiate(astPChiq1Prefab, astGSpawnPoint, Quaternion.identity);
+                ast = PoolManager.Instance.GetAsteroidChiq1();
+                velocidad = GlobalVariables.vcelocidadChiq;
+            } else {
                 // ast = Instantiate(astGPrefab, astGSpawnPoint, Quaternion.identity);
                 ast = PoolManager.Instance.GetAsteroidG();
                 velocidad = GlobalVariables.vcelocidadGrande;
-            // }
+            }
             if(ast == null){
                 Debug.Log("No hay asteroides en el pool");
                 return;

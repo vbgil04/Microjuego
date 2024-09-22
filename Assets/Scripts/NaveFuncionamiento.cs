@@ -15,12 +15,10 @@ public class NaveFuncionamiento : MonoBehaviour
     public float brakingFactor = 1.0f;
  
  
-    void Start()
-    {
+    void Start() {
         _rigid = GetComponent<Rigidbody>();
     }
-    void Update()
-    {
+    void Update() {
         Vector3 position = transform.position;
         if (position.x > GlobalVariables.borderX)
         {
@@ -52,14 +50,10 @@ public class NaveFuncionamiento : MonoBehaviour
             Vector3 brakingForce = -_rigid.velocity * brakingFactor;
             _rigid.AddForce(brakingForce);
         }
-
     }
  
-    void Shooting()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            // var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+    void Shooting() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
             var bullet = PoolManager.Instance.GetBullet();
             bullet.transform.position = bulletSpawnPoint.position;
             bullet.transform.rotation = bulletSpawnPoint.rotation;
@@ -71,8 +65,8 @@ public class NaveFuncionamiento : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision){
-        if(collision.gameObject.CompareTag("Chiquito") || collision.gameObject.CompareTag("Grande")){
+    void OnCollisionEnter(Collision collision) {
+        if(collision.gameObject.CompareTag("Chiquito") || collision.gameObject.CompareTag("Grande")) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             GlobalVariables.score=0;
             GlobalVariables.cantAsteroides=0;
@@ -80,8 +74,7 @@ public class NaveFuncionamiento : MonoBehaviour
             // SceneManager.LoadScene("GameOver");
         }
     }
-    void Puntaje()
-    {
+    void Puntaje() {
         //look for the text in the canvas and change the score
         GameObject.FindObjectOfType<UnityEngine.UI.Text>().text = "Puntuación    " + GlobalVariables.score;
     }

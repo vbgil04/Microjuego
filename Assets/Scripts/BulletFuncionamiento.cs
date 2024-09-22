@@ -17,20 +17,16 @@ public class BulletFuncionamiento : MonoBehaviour
     {
         bulletspawn = GameObject.Find("BulletSpawner").transform;
     }
-    void OnEnable()
-    {
-        // Destroy(gameObject, life);
+    void OnEnable() {
         nacimiento = Time.time;
     }
-    void Update()
-    {
-        if(Time.time > nacimiento + life){
+    void Update() {
+        if(Time.time > nacimiento + life) {
             gameObject.SetActive(false);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
+    void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Chiquito")) {
             GlobalVariables.IncrementarPuntos();
             GlobalVariables.DecrementAsteroides();

@@ -1,0 +1,4 @@
+repository "MicrojuegoS@vb_gil@cloud"
+  path "/"
+    br "/main"
+    co "/main"
