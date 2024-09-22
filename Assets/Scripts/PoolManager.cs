@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,10 +18,13 @@ public class PoolManager : MonoBehaviour
     public List<GameObject> asteroideChiq1Pool;
     public List<GameObject> asteroideChiq2Pool;
     public List<GameObject> bulletPool;
+
     void Awake() {
-        Instance = this;
-    }
-    void Start() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
         asteroideGPool = CreatePool(astGPrefab, AsteroidPoolSize);
         asteroideChiq1Pool = CreatePool(astPChiq1Prefab, AstChiquitoPoolSize);
         asteroideChiq2Pool = CreatePool(astPChiq2Prefab, AstChiquitoPoolSize);
@@ -30,7 +32,7 @@ public class PoolManager : MonoBehaviour
     }
 
     List<GameObject> CreatePool(GameObject prefab, int size){
-        List<GameObject> lista = new List<GameObject>();
+        var lista = new List<GameObject>();
         for (int i = 0; i < size; i++) {
             GameObject obj = Instantiate(prefab);
             obj.SetActive(false);
@@ -73,5 +75,26 @@ public class PoolManager : MonoBehaviour
         objN.SetActive(false);
         bulletPool.Add(objN);
         return objN;
+    }
+
+    public void DisableAllAsteroids()
+    {
+        // Disable all asteroids in the asteroideGPool
+        foreach (GameObject asteroid in asteroideGPool)
+        {
+            asteroid.SetActive(false);
+        }
+
+        // Disable all asteroids in the asteroideChiq1Pool
+        foreach (GameObject asteroid in asteroideChiq1Pool)
+        {
+            asteroid.SetActive(false);
+        }
+
+        // Disable all asteroids in the asteroideChiq2Pool
+        foreach (GameObject asteroid in asteroideChiq2Pool)
+        {
+            asteroid.SetActive(false);
+        }
     }
 }

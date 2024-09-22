@@ -4,30 +4,36 @@ using UnityEngine;
 
 public class VidaAst : MonoBehaviour
 {
-    public int vida = 10;
-
     void Update()
     {
         Vector3 position = transform.position;
         if (position.x > GlobalVariables.borderX)
         {
             gameObject.SetActive(false);
+            // Destroy(gameObject);
             GlobalVariables.DecrementAsteroides();
+            Debug.Log("Asteroid destroyed. Current asteroid count: " + GlobalVariables.cantAsteroides);
         }
         else if (position.x < -GlobalVariables.borderX)
         {
             gameObject.SetActive(false);
+            // Destroy(gameObject);
             GlobalVariables.DecrementAsteroides();
+            Debug.Log("Asteroid destroyed. Current asteroid count: " + GlobalVariables.cantAsteroides);
         }
         if (position.y > GlobalVariables.bordery)
         {
             gameObject.SetActive(false);
+            // Destroy(gameObject);
             GlobalVariables.DecrementAsteroides();
+            Debug.Log("Asteroid destroyed. Current asteroid count: " + GlobalVariables.cantAsteroides);
         }
         else if (position.y < -GlobalVariables.bordery)
         {
             gameObject.SetActive(false);
+            // Destroy(gameObject);
             GlobalVariables.DecrementAsteroides();
+            Debug.Log("Asteroid destroyed. Current asteroid count: " + GlobalVariables.cantAsteroides);
         }
     }
 

@@ -64,8 +64,8 @@ public class NaveFuncionamiento : MonoBehaviour
             bullet.transform.position = bulletSpawnPoint.position;
             bullet.transform.rotation = bulletSpawnPoint.rotation;
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = Vector3.zero;
-        bulletRigidbody.angularVelocity = Vector3.zero;
+            bulletRigidbody.velocity = Vector3.zero;
+            bulletRigidbody.angularVelocity = Vector3.zero;
             bullet.SetActive(true);
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.right * bulletSpeed;
         }
@@ -75,6 +75,8 @@ public class NaveFuncionamiento : MonoBehaviour
         if(collision.gameObject.CompareTag("Chiquito") || collision.gameObject.CompareTag("Grande")){
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             GlobalVariables.score=0;
+            GlobalVariables.cantAsteroides=0;
+            PoolManager.Instance.DisableAllAsteroids();
             // SceneManager.LoadScene("GameOver");
         }
     }

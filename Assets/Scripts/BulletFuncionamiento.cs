@@ -25,28 +25,31 @@ public class BulletFuncionamiento : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Chiquito")) {
-            collision.gameObject.SetActive(false); 
-            gameObject.SetActive(false);
             GlobalVariables.IncrementarPuntos();
             GlobalVariables.DecrementAsteroides();
+            collision.gameObject.SetActive(false); 
+            gameObject.SetActive(false);
+            Debug.Log("Asteroid destroyed. Current asteroid count: " + GlobalVariables.cantAsteroides);
         }
         if (collision.gameObject.CompareTag("Grande")) {
             var aster = collision.gameObject;
             Vector3 position = aster.transform.position;
-            // Vector3 velocity = aster.GetComponent<Rigidbody>().velocity;
-            
-            // var tr1 = Instantiate(astPChiq1Prefab, position + new Vector3(1,1,0) ,Quaternion.identity);
-            // var tr2 = Instantiate(astPChiq2Prefab, position + new Vector3(-1,-1,0),Quaternion.identity);
             var tr1 = PoolManager.Instance.GetAsteroidChiq1();
             var tr2 = PoolManager.Instance.GetAsteroidChiq2();
-            if(tr1 != null){
-                tr1.transform.position = position + new Vector3(1,1,0);
-                tr1.SetActive(true);
+            // var tr1 = Instantiate(astPChiq1Prefab);
+            // var tr2 = Instantiate(astPChiq2Prefab);
+            if(tr1 == null || tr2 == null){
+                Debug.Log("No hay asteroides en el pool");
+                gameObject.SetActive(false);
+                collision.gameObject.SetActive(false);
+                GlobalVariables.DecrementAsteroides();
+                GlobalVariables.IncrementarPuntos();
+                return;
             }
-            if(tr2 != null){
-                tr2.transform.position = position + new Vector3(-1,-1,0);
-                tr2.SetActive(true);
-            }
+            tr1.transform.position = position + new Vector3(1,1,0);
+            tr2.transform.position = position + new Vector3(-1,-1,0);
+            tr1.SetActive(true);
+            tr2.SetActive(true);
 
             //distance entre dos untos
             Vector3 g1 = new Vector3(3,3,0);
@@ -62,6 +65,7 @@ public class BulletFuncionamiento : MonoBehaviour
 
             gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
+            // Destroy(collision.gameObject);
             GlobalVariables.DecrementAsteroides();
             GlobalVariables.IncrementAsteroides();
             GlobalVariables.IncrementAsteroides();
