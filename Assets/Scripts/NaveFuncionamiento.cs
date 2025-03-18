@@ -53,9 +53,9 @@ public class NaveFuncionamiento : MonoBehaviour
             var bullet = PoolManager.Instance.GetBullet(); // obtengo una bala del pool
             bullet.transform.position = bulletSpawnPoint.position; // la posiciono en el punto de salida
             bullet.transform.rotation = bulletSpawnPoint.rotation; // la roto en la dirección del punto de salida
-            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>(); // obtengo el rigidbody de la bala
-            bulletRigidbody.velocity = Vector3.zero;
-            bulletRigidbody.angularVelocity = Vector3.zero; //estas dos líneas son para que la bala no gire de forma extraña
+                Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>(); // obtengo el rigidbody de la bala
+                bulletRigidbody.velocity = Vector3.zero;
+                bulletRigidbody.angularVelocity = Vector3.zero; //estas dos líneas son para que la bala no gire de forma extraña
             bullet.SetActive(true); // activo la bala
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.right * bulletSpeed; // aplico la velocidad a la bala
         }
